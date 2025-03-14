@@ -1,0 +1,92 @@
+package master_manageAPP.DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import master_manageAPP.Classes.Admin;
+
+public class AdminDao {
+
+    public AdminDao() {
+        // Constructor
+    }
+
+    // ✅ 1. Get Admin by Username and Password (Login)
+    public Admin getAdmin(String username, String password) {
+        Admin admin = null;
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                admin = new Admin(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return admin;
+    }
+
+    // ✅ 2. Add New Admin
+    public boolean addAdmin(Admin admin) {
+        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, admin.getUsername());
+            stmt.setString(2, admin.getPassword()); // 🔴 Ideally, hash passwords before saving!
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 3. Update Admin Password
+    public boolean updatePassword(int adminId, String newPassword) {
+        String query = "UPDATE users SET password = ? WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, newPassword); // 🔴 Hashing should be applied here
+            stmt.setInt(2, adminId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 4. Delete Admin by ID
+    public boolean deleteAdmin(int adminId) {
+        String query = "DELETE FROM users WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, adminId);
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
