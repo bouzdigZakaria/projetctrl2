@@ -1,0 +1,54 @@
+package master_manageAPP.Classes;
+
+public class Master {
+	
+	 private int id; //no setter cause its immutable
+	 
+	 private String intitule;
+	 
+	 private String filiere;
+	 
+	 private int place;
+	 
+	
+	 
+
+	public Master(int id ,String intitule,String filiere , int place) {
+		// TODO Auto-generated constructor stub
+		this.id=id;
+	    this.place=place;
+		this.intitule=intitule;
+		this.filiere=filiere;
+	}
+
+	public String getIntitule() {
+		return intitule;
+	}
+
+	public void setIntitule(String intitule) {
+		this.intitule = intitule;
+	}
+
+	
+	public String getFiliere() {
+		return filiere;
+	}
+
+	public void setFiliere(String filiere) {
+		this.filiere = filiere;
+	}
+
+	
+	public int getPlace() {
+		return place;
+	}
+
+	public void setPlace(int place) {
+		this.place = place;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+}
