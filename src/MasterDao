@@ -1,0 +1,122 @@
+package master_manageAPP.DAO;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import master_manageAPP.Classes.Master;
+
+public class MasterDao {
+
+    public MasterDao() {
+        // Constructor
+    }
+
+    // ✅ 1. Add a new Master
+    public boolean addMaster(Master master) {
+        String query = "INSERT INTO masters (intitule, filiere, place) VALUES (?, ?, ?)";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, master.getIntitule());
+            stmt.setString(2, master.getFiliere());
+            stmt.setInt(3, master.getPlace());
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 2. Get Master by ID
+    public Master getMasterById(int id) {
+        Master master = null;
+        String query = "SELECT * FROM masters WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                master = new Master(
+                    rs.getInt("id"),
+                    rs.getString("intitule"),
+                    rs.getString("filiere"),
+                    rs.getInt("place")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return master;
+    }
+
+    // ✅ 3. Get All Masters
+    public List<Master> getAllMasters() {
+        List<Master> masters = new ArrayList<>();
+        String query = "SELECT * FROM masters";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Master master = new Master(
+                    rs.getInt("id"),
+                    rs.getString("intitule"),
+                    rs.getString("filiere"),
+                    rs.getInt("place")
+                );
+                masters.add(master);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return masters;
+    }
+
+    // ✅ 4. Update Master
+    public boolean updateMaster(Master master) {
+        String query = "UPDATE masters SET intitule = ?, filiere = ?, place = ? WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, master.getIntitule());
+            stmt.setString(2, master.getFiliere());
+            stmt.setInt(3, master.getPlace());
+            stmt.setInt(4, master.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 5. Delete Master
+    public boolean deleteMaster(int id) {
+        String query = "DELETE FROM masters WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
