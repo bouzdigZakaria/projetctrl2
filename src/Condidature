@@ -1,0 +1,79 @@
+package master_manageAPP.Classes;
+import java.util.Date;
+public class Condidature {
+	private int id;
+	private int master_id;
+	private int condidat_id;
+	private Date date;
+	private String note; // notes on decision mades 
+	private Status status;
+	
+
+	
+
+	public Condidature(int id, int master_id, int condidat_id, Date date, String note, Status status) {
+		
+		this.id = id;
+		this.master_id = master_id;
+		this.condidat_id = condidat_id;
+		this.date = date;
+		this.note = note;
+		this.status = status;
+	}
+
+
+	public int getMaster_id() {
+		return master_id;
+	}
+
+
+	public void setMaster_id(int master_id) {
+		this.master_id = master_id;
+	}
+
+
+	public int getCondidat_id() {
+		return condidat_id;
+	}
+
+
+	public void setCondidat_id(int condidat_id) {
+		this.condidat_id = condidat_id;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public String getNote() {
+		return note;
+	}
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	public Status getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+}
