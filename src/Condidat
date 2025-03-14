@@ -1,0 +1,68 @@
+package master_manageAPP.Classes;
+
+public class Condidat {
+	 private int id;
+	 private String code;
+	 private String nom;
+	 private String prenom;
+	 private String diplome;
+	 private Mention mention;
+
+	public Condidat(int id , String code,String nom,String prenom,String diplom,Mention mention) {
+		// TODO Auto-generated constructor stub
+		this.id=id;
+		this.code=code;
+		this.nom=nom;
+		this.prenom=prenom;
+		this.diplome=diplom;
+		this.mention=mention;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getDiplome() {
+		return diplome;
+	}
+
+	public void setDiplome(String diplome) {
+		this.diplome = diplome;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Mention getMention() {
+		return mention;
+	}
+
+	public void setMention(Mention mention) {
+		this.mention = mention;
+	}
+
+
+	
+
+}
