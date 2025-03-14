@@ -1,0 +1,8 @@
+package master_manageAPP.Classes;
+
+public enum Status {
+    PENDING,     // Application submitted but not reviewed
+    ACCEPTED,    // Candidate accepted into the master program
+    REJECTED,    // Candidate not accepted
+    WAITING_LIST // Candidate is on a waiting list
+}
