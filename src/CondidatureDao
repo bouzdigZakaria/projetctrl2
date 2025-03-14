@@ -1,0 +1,226 @@
+package master_manageAPP.DAO;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import master_manageAPP.Classes.Condidature;
+import master_manageAPP.Classes.Status;
+import master_manageAPP.Classes.Condidat;
+import master_manageAPP.Classes.Master;
+import master_manageAPP.Classes.Mention;
+
+
+public class CondidatureDao {
+
+    public CondidatureDao() {
+        // Constructor
+    }
+
+
+    public boolean addCondidature(Condidature condidature) {
+        String query = "INSERT INTO condidatures (master_id, condidat_id, date, note, status) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, condidature.getMaster_id());
+            stmt.setInt(2, condidature.getCondidat_id());
+            stmt.setDate(3, new java.sql.Date(condidature.getDate().getTime()));
+            stmt.setString(4, condidature.getNote());
+            stmt.setString(5, condidature.getStatus().name()); // Store as ENUM (String)
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Condidature getCondidatureById(int id) {
+        Condidature condidature = null;
+        String query = "SELECT * FROM condidatures WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                condidature = new Condidature(
+                    rs.getInt("id"),
+                    rs.getInt("master_id"),
+                    rs.getInt("condidat_id"),
+                    rs.getDate("date"),
+                    rs.getString("note"),
+                    Status.valueOf(rs.getString("status")) // Convert String to Enum
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidature;
+    }
+
+    // ✅ 3. Get All Condidatures
+    public List<Condidature> getAllCondidatures() {
+        List<Condidature> condidatures = new ArrayList<>();
+        String query = "SELECT * FROM condidatures";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Condidature condidature = new Condidature(
+                    rs.getInt("id"),
+                    rs.getInt("master_id"),
+                    rs.getInt("condidat_id"),
+                    rs.getDate("date"),
+                    rs.getString("note"),
+                    Status.valueOf(rs.getString("status"))
+                );
+                condidatures.add(condidature);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidatures;
+    }
+
+ 
+    public boolean updateCondidature(Condidature condidature) {
+        String query = "UPDATE condidatures SET master_id = ?, condidat_id = ?, date = ?, note = ?, status = ? WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, condidature.getMaster_id());
+            stmt.setInt(2, condidature.getCondidat_id());
+            stmt.setDate(3, new java.sql.Date(condidature.getDate().getTime()));
+            stmt.setString(4, condidature.getNote());
+            stmt.setString(5, condidature.getStatus().name());
+            stmt.setInt(6, condidature.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    
+    public boolean deleteCondidature(int id) {
+        String query = "DELETE FROM condidatures WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+
+    public List<Master> getMastersByCondidat(int condidatId) {
+        List<Master> masters = new ArrayList<>();
+        String query = "SELECT m.* FROM masters m " +
+                       "JOIN condidatures c ON m.id = c.master_id " +
+                       "WHERE c.condidat_id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, condidatId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Master master = new Master(
+                    rs.getInt("id"),
+                    rs.getString("intitule"),
+                    rs.getString("filiere"),
+                    rs.getInt("place")
+                );
+                masters.add(master);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return masters;
+    }
+
+
+    public List<Condidat> getCondidatsByMaster(int masterId) {
+        List<Condidat> condidats = new ArrayList<>();
+        String query = "SELECT c.* FROM condidats c " +
+                       "JOIN condidatures cd ON c.id = cd.condidat_id " +
+                       "WHERE cd.master_id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, masterId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Condidat condidat = new Condidat(
+                    rs.getInt("id"),
+                    rs.getString("code"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("diplome"),
+                    Mention.valueOf(rs.getString("mention")) // Convert ENUM
+                );
+                condidats.add(condidat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidats;
+    }
+
+    // ✅ 3. Get all Condidats with a specific Status (e.g., SELECTED, WAITING)
+    public List<Condidat> getCondidatsByStatus(Status status) {
+        List<Condidat> condidats = new ArrayList<>();
+        String query = "SELECT DISTINCT c.* FROM condidats c " +
+                       "JOIN condidatures cd ON c.id = cd.condidat_id " +
+                       "WHERE cd.status = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, status.name()); // Convert ENUM to String
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Condidat condidat = new Condidat(
+                    rs.getInt("id"),
+                    rs.getString("code"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("diplome"),
+                    Mention.valueOf(rs.getString("mention"))
+                );
+                condidats.add(condidat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidats;
+    }
+
+}
