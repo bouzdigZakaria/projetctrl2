@@ -1,0 +1,131 @@
+package master_manageAPP.DAO;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import master_manageAPP.Classes.Condidat;
+import master_manageAPP.Classes.Mention;
+
+public class CondidatDao {
+
+    public CondidatDao() {
+        // Constructor
+    }
+
+    // ✅ 1. Add a new Condidat
+    public boolean addCondidat(Condidat condidat) {
+        String query = "INSERT INTO condidats (code, nom, prenom, diplome, mention) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, condidat.getCode());
+            stmt.setString(2, condidat.getNom());
+            stmt.setString(3, condidat.getPrenom());
+            stmt.setString(4, condidat.getDiplome());
+            stmt.setString(5, condidat.getMention().name()); // Store enum as String
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 2. Get Condidat by ID
+    public Condidat getCondidatById(int id) {
+        Condidat condidat = null;
+        String query = "SELECT * FROM condidats WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                condidat = new Condidat(
+                    rs.getInt("id"),
+                    rs.getString("code"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("diplome"),
+                    Mention.valueOf(rs.getString("mention")) // Convert String to Enum
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidat;
+    }
+
+    // ✅ 3. Get All Condidats
+    public List<Condidat> getAllCondidats() {
+        List<Condidat> condidats = new ArrayList<>();
+        String query = "SELECT * FROM condidats";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Condidat condidat = new Condidat(
+                    rs.getInt("id"),
+                    rs.getString("code"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("diplome"),
+                    Mention.valueOf(rs.getString("mention")) // Convert String to Enum
+                );
+                condidats.add(condidat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return condidats;
+    }
+
+    // ✅ 4. Update Condidat
+    public boolean updateCondidat(Condidat condidat) {
+        String query = "UPDATE condidats SET code = ?, nom = ?, prenom = ?, diplome = ?, mention = ? WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, condidat.getCode());
+            stmt.setString(2, condidat.getNom());
+            stmt.setString(3, condidat.getPrenom());
+            stmt.setString(4, condidat.getDiplome());
+            stmt.setString(5, condidat.getMention().name()); // Store enum as String
+            stmt.setInt(6, condidat.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // ✅ 5. Delete Condidat
+    public boolean deleteCondidat(int id) {
+        String query = "DELETE FROM condidats WHERE id = ?";
+
+        try (Connection conn = DataBaseConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
