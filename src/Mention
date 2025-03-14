@@ -1,0 +1,5 @@
+package master_manageAPP.Classes;
+
+public enum Mention {
+EX,TB,B,AB,P
+}
