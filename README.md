@@ -20,6 +20,14 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 •Optimiser la recherche : Offrir des fonctionnalités de recherche et de filtrage avancées pour accéder rapidement aux informations sur les masters, les candidats et les statuts des candidatures.
 
+## Diagramme Use Case
+ 
+![image alt](https://github.com/bouzdigZakaria/projetctrl2/blob/master/usecasediagramme.PNG?raw=true)
+
+## Diagramme de Classe
+
+![image alt](https://github.com/bouzdigZakaria/projetctrl2/blob/master/classDiagramm.PNG?raw=true)
+
 ## Fonctionnalités
 
 • Ajouter un master 
