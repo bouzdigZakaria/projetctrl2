@@ -31,8 +31,11 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 ## Fonctionnalités
 
 • Ajouter un master 
+
 • Enregistrer une candidature 
+
 • Filtrer les candidatures par filière 
+
 • Rechercher un candidat par nom
 
 ## Base de données
