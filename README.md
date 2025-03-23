@@ -38,6 +38,10 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 • Rechercher un candidat par nom
 
+## Demonstration video
+
+https://www.loom.com/share/6ecfeebc7ab9492ca07ca8d0de513899?sid=b2799857-9330-4a89-9068-6dc732e0fbf4
+
 ## Base de données
 
 ### Schéma relationnel
@@ -57,8 +61,8 @@ CREATE TABLE Master (
     places_disponibles INT NOT NULL
 );
 
--- Table: admin
-CREATE TABLE admin (
+-- Table: Admin
+CREATE TABLE Admin (
  id INT PRIMARY KEY AUTO_INCREMENT,
  username varchar(255) NOT NULL,
  password varchar(255) NOT NULL
