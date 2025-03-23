@@ -42,6 +42,11 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 https://www.loom.com/share/6ecfeebc7ab9492ca07ca8d0de513899?sid=b2799857-9330-4a89-9068-6dc732e0fbf4
 
+## Technologies Utilisées
+
+Langage : Java ,Framework d'interface graphique : Java Swing ,Api : JavaMail ,Base de données : MySQL,Bibliothèque graphique : JFreeChart ,Outils de développement : IDE : NetBeans ,Logiciel des diagrammes : MagicDraw ,Outil de gestion de base de données : phpMyAdmin ,Accès aux données : JDBC.
+
+
 ## Base de données
 
 ### Schéma relationnel
@@ -89,7 +94,3 @@ PRIMARY KEY(master_id, condidats_id),
 FOREIGN KEY (master_id) REFERENCES master(id),
 FOREIGN KEY (condidats_id) REFERENCES condidats(id),
 );
-
-## Technologies Utilisées
-
-Langage : Java ,Framework d'interface graphique : Java Swing ,Api : JavaMail ,Base de données : MySQL,Bibliothèque graphique : JFreeChart ,Outils de développement : IDE : NetBeans ,Logiciel des diagrammes : MagicDraw ,Outil de gestion de base de données : phpMyAdmin ,Accès aux données : JDBC.
