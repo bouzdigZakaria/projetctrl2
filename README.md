@@ -40,8 +40,8 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 ## Demonstration video
 
-[https://www.loom.com/share/6ecfeebc7ab9492ca07ca8d0de513899?sid=b2799857-9330-4a89-9068-6dc732e0fbf4
-](https://github.com/user-attachments/assets/d99acbc4-7ce6-4f34-b965-14e351db3928)
+
+
 ## Technologies Utilisées
 
 Langage : Java ,Framework d'interface graphique : Java Swing ,Api : JavaMail ,Base de données : MySQL,Bibliothèque graphique : JFreeChart ,Outils de développement : IDE : NetBeans ,Logiciel des diagrammes : MagicDraw ,Outil de gestion de base de données : phpMyAdmin ,Accès aux données : JDBC.
