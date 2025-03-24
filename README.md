@@ -26,7 +26,7 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 ## Diagramme de Classe
 
-![image alt](https://github.com/bouzdigZakaria/projetctrl2/blob/master/classDiagramm.PNG?raw=true)
+![image alt]([https://github.com/bouzdigZakaria/projetctrl2/blob/master/classDiagramm.PNG?raw=true](https://github.com/bouzdigZakaria/projetctrl2/blob/master/classDiagramm1.PNG?raw=true))
 
 ## Fonctionnalités
 
