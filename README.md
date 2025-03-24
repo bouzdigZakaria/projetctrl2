@@ -38,10 +38,6 @@ Actuellement, la gestion des masters est réalisée de manière peu centralisée
 
 • Rechercher un candidat par nom
 
-## Demonstration video
-
-
-
 ## Technologies Utilisées
 
 Langage : Java ,Framework d'interface graphique : Java Swing ,Api : JavaMail ,Base de données : MySQL,Bibliothèque graphique : JFreeChart ,Outils de développement : IDE : NetBeans ,Logiciel des diagrammes : MagicDraw ,Outil de gestion de base de données : phpMyAdmin ,Accès aux données : JDBC.
@@ -94,3 +90,7 @@ PRIMARY KEY(master_id, condidats_id),
 FOREIGN KEY (master_id) REFERENCES master(id),
 FOREIGN KEY (condidats_id) REFERENCES condidats(id),
 );
+
+## Demonstration video
+
+https://github.com/user-attachments/assets/c95339af-1a69-463e-882f-80354c3d014e
