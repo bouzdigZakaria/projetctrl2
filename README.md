@@ -44,7 +44,7 @@ Langage : Java ,Framework d'interface graphique : Java Swing ,Api : JavaMail ,Ba
 
 ## Demonstration video
 
-https://github.com/user-attachments/assets/897561ac-54ae-40cf-84d7-d020e79cb11c
+https://github.com/user-attachments/assets/47996b0f-20bc-4e17-8068-b88aa3350631
 
 ## Base de données
 
